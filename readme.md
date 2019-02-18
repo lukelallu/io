@@ -2,7 +2,7 @@ Build project
 mvn clean install
 
 Docker Run
-
+docker-compose up
 
 Eureka Server
 http://localhost:9061/

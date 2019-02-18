@@ -3,6 +3,11 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/account-service/Dockerfile">
           <value>
             <set />
@@ -359,6 +364,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../poc/sample-spring-microservices-new/organization-service/src/main/java/pl/piomin/services/organization/repository/OrganizationRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../lk/readme.md">
           <value>
             <set />
           </value>
