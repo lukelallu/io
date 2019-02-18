@@ -1,0 +1,26 @@
+server:
+  port: 9060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9061/eureka/
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+hystrix:
+  enabled: true
+
+zuul:
+  routes:
+    customer:
+      path: /customer/**
+      serviceId: customer-service
+    account:
+      path: /account/**
+      serviceId: account-service
+    dashboard:
+      path: /dashboard/**
+      serviceId: dashboard-service

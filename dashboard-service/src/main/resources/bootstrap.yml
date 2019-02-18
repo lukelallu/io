@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: dashboard-service
+
+server:
+  port: 9093
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+  client:
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://localhost:9061/eureka/
+
+turbine:
+  aggregator:
+    clusterNameExpression: new String("default")
+    clusterConfig: account-service, customer-service
+  appConfig: account-service, customer-service
+  InstanceMonitor:
+      eventStream:
+        skipLineLogic:
+          enabled: false
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"

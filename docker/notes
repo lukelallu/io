@@ -1,0 +1,36 @@
+docker build -f Dockerfile -t discovery .
+docker images
+docker run -p 9061:9061 discovery
+
+docker-compose up -build
+
+docker image build -t web1 .
+
+docker image build -t web1:1.0 .
+docker image inspect web1
+
+
+docker login
+
+ls -la ~/.docker
+docker image tag web1 lalluluke/web1:latest
+docker image push lalluluke/web1:latest
+
+docker image rm -f 4b31
+
+docker pull lalluluke/web1:latest
+docker image ls
+docker image tag lalluluke/web1 web1
+
+docker container ls
+
+docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py -d web1
+
+docker container stats
+docker container logs web1
+
+Images - The blueprints of our application which form the basis of containers. In the demo above, we used the docker pull command to download the busybox image.
+Containers - Created from Docker images and run the actual application. We create a container using docker run which we did using the busybox image that we downloaded. A list of running containers can be seen using the docker ps command.
+Docker Daemon - The background service running on the host that manages building, running and distributing Docker containers. The daemon is the process that runs in the operating system to which clients talk to.
+Docker Client - The command line tool that allows the user to interact with the daemon. More generally, there can be other forms of clients too - such as Kitematic which provide a GUI to the users.
+Docker Hub - A registry of Docker images. You can think of the registry as a directory of all available Docker images. If required, one can host their own Docker registries and can use them for pulling images.

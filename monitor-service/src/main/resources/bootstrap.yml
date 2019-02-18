@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: monitor-service
+ # cloud:
+ #   config:
+ #     uri: http://localhost:9088
+
+server:
+  port: 9093
+
+eureka:
+  environment: Staging
+  server:
+    registry-sync-retry-wait-ms: 1000
+    a-sgcache-expiry-timeout-ms: 20000
+    eviction-interval-timer-in-ms: 10000
+    peer-eureka-nodes-update-interval-ms: 3000
+    renewal-threshold-update-interval-ms: 60000
+  refresh.interval: 1
+  appInfo:
+    replace.interval: 1
+    initial.replace.time: 2
+  client:
+    healthcheck.enabled: true
+    serviceUrl:
+      defaultZone: http://discovery-service:9061/eureka
+  instance:
+      preferIpAddress: true
+      leaseRenewalIntervalInSeconds: 10
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+turbine:
+  aggregator:
+    clusterNameExpression: 'default'
+  appConfig: account-service,customer-service,proxy-service

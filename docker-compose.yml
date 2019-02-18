@@ -1,0 +1,125 @@
+version: '3'
+services:
+    config-service:
+        container_name: config-service
+        build:
+            context: ./config-service
+            dockerfile: Dockerfile
+        image: config-service:latest
+        expose:
+            - 9088
+        ports:
+            - 9088:9088
+        networks:
+            - spring-cloud-network
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+    discovery-service:
+        container_name: discovery-service
+        build:
+            context: ./discovery-service
+            dockerfile: Dockerfile
+        image: discovery-service:latest
+        expose:
+            - 9061
+        ports:
+            - 9061:9061
+        networks:
+            - spring-cloud-network
+        links:
+            - config-service:config-server
+        depends_on:
+            - config-service
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+    proxy-service:
+        container_name: proxy-service
+        build:
+            context: ./proxy-service
+            dockerfile: Dockerfile
+        image: proxy-service:latest
+        expose:
+            - 9060
+        ports:
+            - 9060:9060
+        networks:
+            - spring-cloud-network
+        links:
+            - discovery-service:discovery-service
+        depends_on:
+            - discovery-service
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+    account-service:
+        container_name: account-service
+        build:
+            context: ./account-service
+            dockerfile: Dockerfile
+        image: account-service:latest
+        expose:
+            - 9091
+        ports:
+            - 9091:9091
+        networks:
+            - spring-cloud-network
+        links:
+            - discovery-service:discovery-service
+        depends_on:
+            - discovery-service
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+    customer-service:
+        container_name: customer-service
+        build:
+            context: ./customer-service
+            dockerfile: Dockerfile
+        image: customer-service:latest
+        expose:
+            - 9092
+        ports:
+            - 9092:9092
+        networks:
+            - spring-cloud-network
+        links:
+            - discovery-service:discovery-service
+        depends_on:
+            - discovery-service
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+    monitor-service:
+        container_name: monitor-service
+        build:
+            context: ./monitor-service
+            dockerfile: Dockerfile
+        image: monitor-service:latest
+        expose:
+            - 9093
+        ports:
+            - 9093:9093
+        networks:
+            - spring-cloud-network
+        links:
+            - discovery-service:discovery-service
+        depends_on:
+            - discovery-service
+        volumes:
+            - spring-cloud-config-repo:/var/lib/spring-cloud/config-repo
+        logging:
+            driver: json-file
+networks:
+    spring-cloud-network:
+        driver: bridge
+
+volumes:
+    spring-cloud-config-repo:
+        external: true
